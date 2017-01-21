@@ -5,12 +5,16 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public float totalEnergy;
-
+    private bool isDeath = false;
     public IEnumerator Damage(int dot)
     {
-        while (true)
+        while (true && !isDeath)
         {
             totalEnergy -= dot * Time.deltaTime;
+            if (totalEnergy <= 0)
+            {
+                isDeath = true;
+            }
             yield return null;
         }
     }
