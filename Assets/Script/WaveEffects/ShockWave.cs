@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShockWave : MonoBehaviour {
 
-	public float SchockPower;
-	public float SchockOneShotDamage;
+	public float RepulsivePower;
+	public float MinDamPerSecond;
 
 
 	public GameObject[] particleObjects;
