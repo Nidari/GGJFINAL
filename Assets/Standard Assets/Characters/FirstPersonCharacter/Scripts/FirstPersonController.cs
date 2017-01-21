@@ -28,7 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
-        private Camera m_Camera;
+        public Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
         private Vector2 m_Input;
@@ -48,7 +48,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_Animator = GetComponentInChildren<Animator>();
             m_CharacterController = GetComponent<CharacterController>();
-            m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -82,6 +81,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir.y = 0f;
             }
+            // Comandi per far vedere i particellari
+            float triggerL = Input.GetAxis("TriggerL");
+            if (triggerL != 0)
+            {
+                m_Camera.cullingMask |= (1 << LayerMask.NameToLayer("PlayerOnly"));
+            }
+            else
+            {
+                m_Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("PlayerOnly"));
+            }
+            
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }

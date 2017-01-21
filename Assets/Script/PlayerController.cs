@@ -14,13 +14,17 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        WaveController wc = col.GetComponent<WaveController>();
-        coroutineDamage = StartCoroutine(gc.Damage(wc.dot));
+      
+            WaveController wc = col.GetComponent<WaveController>();
+            coroutineDamage = StartCoroutine(gc.Damage(wc.dot));
+        
     }
 
     void OnTriggerExit(Collider col)
     {
-        StopCoroutine(coroutineDamage);
+      
+            StopCoroutine(coroutineDamage);
+        
     }
 
 
