@@ -4,28 +4,45 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private GameController gc;
-    private Coroutine coroutineDamage;
+    
+    private Coroutine Effect;
 
-    void Start()
-    {
-        gc = FindObjectOfType<GameController>();
-    }
-
-    void OnTriggerEnter(Collider col)
+  
+	private void OnTriggerEnter(Collider wave)
     {
       
-            WaveController wc = col.GetComponent<WaveController>();
-            coroutineDamage = StartCoroutine(gc.Damage(wc.dot));
+		switch (wave.gameObject.tag){
+
+			case "SonicWave":
+				Effect = StartCoroutine (ShockingDamage (wave.GetComponent<SonicWave> ().DamagePerSecond));
+			    break;
+			case "MagneticWave":
+				break;
+			case "ShockWave":
+				break;
+		}
         
     }
 
-    void OnTriggerExit(Collider col)
+	private void OnTriggerExit(Collider wave)
     {
       
-            StopCoroutine(coroutineDamage);
+		switch (wave.gameObject.tag){
+
+			case "SonicWave":
+				break;
+			case "MagneticWave":
+				break;
+			case "ShockWave":
+				break;
+		}
         
     }
 
-
+	private IEnumerator ShockingDamage(float dot)
+	{
+		while(true){
+			
+		}
+	}
 }
