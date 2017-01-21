@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     
-	private Coroutine sonicDamEff, sonicDistEff, magneticDamEff, magneticDirEff, repulsiveDamEff, repulsiveDirEff;
+	private Coroutine sonicDamEff, sonicDistEff, magneticDamEff, magneticDirEff, repulsiveDamEff, repulsiveDirEff, lifeBarEffect;
 
 	public static bool IsDisturbed, IsInfluencedByForce;
 	public static Vector3 influInpu = Vector3.zero;
 	public static Quaternion distInput = Quaternion.identity;
+	public GameObject menu;
+	public static float TotalEnergy;
 
 	private void OnTriggerEnter(Collider wave)
     {
@@ -19,16 +21,20 @@ public class PlayerController : MonoBehaviour
 			case "SonicWave":
 				sonicDamEff = StartCoroutine (ConstantDot (wave.GetComponent<SonicWave> ().DamagePerSecond));
 				sonicDistEff = StartCoroutine (DisturbingEffect (wave.GetComponent <SonicWave> ().DisturbingPower));
+				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
+			    
 			    break;
 			case "MagneticWave":
 				MagneticWave mwTempLink = wave.GetComponent<MagneticWave> ();
 				magneticDamEff = StartCoroutine (VariableProgressiveDot (mwTempLink.MinDamPerSecond, mwTempLink.gameObject.transform));
 				magneticDirEff = StartCoroutine (MagneticDirEffect (mwTempLink.MagneticPower, this.gameObject.transform, mwTempLink.gameObject.transform));
+				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
 				break;
 			case "ShockWave":
 				ShockWave shwTempLink = wave.GetComponent <ShockWave> ();
 				repulsiveDamEff = StartCoroutine (VariableProgressiveDot (shwTempLink.MinDamPerSecond, shwTempLink.gameObject.transform));
 				repulsiveDirEff = StartCoroutine (RepulsiveDirEffect (shwTempLink.RepulsivePower, this.gameObject.transform, shwTempLink.gameObject.transform));
+				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
 				break;
 		}
         
@@ -44,18 +50,21 @@ public class PlayerController : MonoBehaviour
 				StopCoroutine (sonicDistEff);
 				IsDisturbed = false;
 				distInput = Quaternion.identity;
+				StopCoroutine (lifeBarEffect);
 				break;
 			case "MagneticWave":
 				StopCoroutine (magneticDamEff);
 				StopCoroutine (magneticDirEff);
 				IsInfluencedByForce = false;
 				influInpu = Vector3.zero;
+				StopCoroutine (lifeBarEffect);
 				break;
 			case "ShockWave":
 				StopCoroutine (repulsiveDamEff);
 				StopCoroutine (repulsiveDirEff);
 				IsInfluencedByForce = false;
 				influInpu = Vector3.zero;
+				StopCoroutine (lifeBarEffect);
 				break;
 		}
         
@@ -64,23 +73,18 @@ public class PlayerController : MonoBehaviour
 	private IEnumerator ConstantDot(float dot)
 	{
 
-		var gcTempLink = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-		 
-
 		while(true)
 		{
-			gcTempLink.totalEnergy -= Time.deltaTime * dot;
+			TotalEnergy -= Time.deltaTime * dot;
 		}
 	}
 
 	private IEnumerator VariableProgressiveDot(float minDot, Transform emissionSource)
 	{
 
-		var gcTempLink = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-
 		while(true)
 		{
-			gcTempLink.totalEnergy -= Time.deltaTime * minDot * 1 / ((emissionSource.position - this.gameObject.transform.position).sqrMagnitude);
+			TotalEnergy -= Time.deltaTime * minDot * 1 / ((emissionSource.position - this.gameObject.transform.position).sqrMagnitude);
 		}
 	}
 

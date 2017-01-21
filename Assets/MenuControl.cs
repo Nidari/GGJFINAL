@@ -23,7 +23,6 @@ public class MenuControl : MonoBehaviour
     void Start()
     {
         lifeBarRect = LifeBar.GetComponent<RectTransform>();
-        StartCoroutine(CubeSpawn());
     }
 
     void Update()
@@ -43,10 +42,11 @@ public class MenuControl : MonoBehaviour
         }
     }
 
-    public IEnumerator CubeSpawn()
+	public IEnumerator CubeSpawn()
     {
         while (true)
         {
+			LifeBar.fillAmount = PlayerController.TotalEnergy / 100;
             GameObject go = Instantiate(cubePrefab);
             go.transform.SetParent(cubeSpawner);
             RectTransform rt = go.GetComponent<RectTransform>();
@@ -71,8 +71,5 @@ public class MenuControl : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-
-
-
 
 }

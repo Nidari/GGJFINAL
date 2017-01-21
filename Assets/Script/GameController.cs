@@ -8,19 +8,6 @@ public class GameController : MonoBehaviour
     private bool isDeath = false;
 
 
-    public IEnumerator Damage(int dot)
-    {
-        while (true && !isDeath)
-        {
-            totalEnergy -= dot * Time.deltaTime;
-            if (totalEnergy <= 0)
-            {
-                isDeath = true;
-            }
-            yield return null;
-        }
-    }
-
     void Death()
     {
         // mostra ui
