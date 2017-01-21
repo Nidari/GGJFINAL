@@ -82,8 +82,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
             // Comandi per far vedere i particellari
-            float triggerL = Input.GetAxis("TriggerL");
-            if (triggerL != 0)
+            if ((Input.GetButton("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("TriggerLP2") && SwitchLogic.isPlayer1Commander))
             {
                 m_Camera.cullingMask |= (1 << LayerMask.NameToLayer("PlayerOnly"));
             }
@@ -213,12 +212,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Camera.transform.localPosition = newCameraPosition;
         }
 
-
+        float horizontal, vertical;
         private void GetInput(out float speed)
         {
+         
             // Read input
-            float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-            float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            if (!SwitchLogic.isPlayer1Commander)
+            {
+                horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+                vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            }
+            else if (SwitchLogic.isPlayer1Commander)
+            {
+                horizontal = CrossPlatformInputManager.GetAxis("HorizontalP2");
+                vertical = CrossPlatformInputManager.GetAxis("VerticalP2");
+            }
+        
 
             bool waswalking = m_IsWalking;
 
