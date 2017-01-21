@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public float totalEnergy;
     private bool isDeath = false;
 
+
     public IEnumerator Damage(int dot)
     {
         while (true && !isDeath)
@@ -16,15 +17,20 @@ public class GameController : MonoBehaviour
             {
                 isDeath = true;
             }
-            else
-                UpdateLife(GameObject.FindGameObjectWithTag("UiPlayer").GetComponent<MenuControl>());
             yield return null;
         }
     }
 
-    private void UpdateLife(MenuControl menuRef)
+    void Death()
     {
-        menuRef.LifePoints.text = ((int)totalEnergy).ToString();
-        menuRef.LifeBar.fillAmount = totalEnergy / 100;
+        // mostra ui
+    }
+
+    void Update()
+    {
+        //if (Input.GetButtonDown(KeyCode))
+        //{
+
+        //}
     }
 }
