@@ -63,7 +63,7 @@ public class CommandoInput : MonoBehaviour
                 }
                 pc.currentTakeDamage += pc.damageCoefficient;
             }
-            else
+            else if ((Input.GetButtonUp("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonUp("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
                 commandoCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CommanderOnly"));
                 PlayerController pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -71,8 +71,14 @@ public class CommandoInput : MonoBehaviour
                 pc.currentTakeDamage -= pc.damageCoefficient;
                 if (pc.currentTakeDamage == 0)
                 {
-                    StopCoroutine(pc.costantAbilityDotReff);
-                    StopCoroutine(pc.lifeBarEffect);
+                    if (pc.costantAbilityDotReff != null)
+                    {
+                        pc.costantAbilityDotReff = pc.Fantasia(pc.costantAbilityDotReff);
+                    }
+                    if (pc.lifeBarEffect != null)
+                    {
+                        pc.lifeBarEffect = pc.Fantasia(pc.lifeBarEffect);
+                    }
                 }
             }
 

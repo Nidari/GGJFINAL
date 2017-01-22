@@ -84,7 +84,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // Comandi per far vedere i particellari
             if ((Input.GetButtonDown("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonDown("TriggerLP2") && SwitchLogic.isPlayer1Commander))
             {
-                PlayerController pc = GetComponent<PlayerController>();
+                PlayerController pc = this.gameObject.GetComponent<PlayerController>();
                 m_Camera.cullingMask |= (1 << LayerMask.NameToLayer("PlayerOnly"));
                 if (pc.currentTakeDamage == 0)
                 {
@@ -92,16 +92,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
                 pc.currentTakeDamage += pc.damageCoefficient;
             }
-            else
+            else if ((Input.GetButtonUp("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonUp("TriggerLP2") && SwitchLogic.isPlayer1Commander))
             {
                 m_Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("PlayerOnly"));
-                PlayerController pc = GetComponent<PlayerController>();
+                PlayerController pc = this.gameObject.GetComponent<PlayerController>();
 
                 pc.currentTakeDamage -= pc.damageCoefficient;
                 if (pc.currentTakeDamage == 0)
                 {
-                    StopCoroutine(pc.costantAbilityDotReff);
-                    StopCoroutine(pc.lifeBarEffect);
+                    if (pc.costantAbilityDotReff != null)
+                    {
+                        pc.costantAbilityDotReff = pc.Fantasia(pc.costantAbilityDotReff);
+                    }
+                    if (pc.lifeBarEffect != null)
+                    {
+                        pc.lifeBarEffect = pc.Fantasia(pc.lifeBarEffect);
+                    }
                 }
             }
             
