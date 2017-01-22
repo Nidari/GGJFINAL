@@ -8,6 +8,13 @@ public class SwitchLogic : MonoBehaviour
     public static bool isPlayer1Commander = false;
     public Camera playerCam, commanderCam;
 
+
+    bool firstSwap = false;
+    bool secondSwap = false;
+    bool thirdSwap = false;
+    bool fourthSwap = false;
+
+
     public void Switch()
     {
         isPlayer1Commander = !isPlayer1Commander;
@@ -31,11 +38,6 @@ public class SwitchLogic : MonoBehaviour
 
     public void CheckGameStatus()
     {
-        bool firstSwap = false;
-        bool secondSwap = false;
-        bool thirdSwap = false;
-        bool fourthSwap = false;
-
         pulseFrequency = 1-(PlayerController.TotalEnergy % 20 / 20);
 
 
@@ -44,36 +46,42 @@ public class SwitchLogic : MonoBehaviour
             
             if (!firstSwap)
             {
+                Debug.Log("Una volta uno");
+                firstSwap = true;
                 Switch();
             }
-            firstSwap = true;
+            
         }
 
-        else if (PlayerController.TotalEnergy >= 0 && PlayerController.TotalEnergy < 60)
+        else if (PlayerController.TotalEnergy >= 40 && PlayerController.TotalEnergy < 60)
         {
             if (!secondSwap)
             {
+                Debug.Log("Una volta due");
+                secondSwap = true;
                 Switch();
             }
-            secondSwap = true;
+            
         }
 
         else if (PlayerController.TotalEnergy >= 20 && PlayerController.TotalEnergy < 40)
         {
             if (!thirdSwap)
             {
+                Debug.Log("Una volta tre");
+                thirdSwap = true;
                 Switch();
             }
-            thirdSwap = true;
         }
 
         else if (PlayerController.TotalEnergy > 00 && PlayerController.TotalEnergy < 20)
         {
             if (!fourthSwap)
             {
+                Debug.Log("Una volta quattro");
+                fourthSwap = true;
                 Switch();
             }
-            fourthSwap = true;
         }
         else if (PlayerController.TotalEnergy < 0)
         {

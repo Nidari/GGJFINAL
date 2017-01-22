@@ -8,17 +8,13 @@ public class MenuControl : MonoBehaviour
 {
     public Image LifeBar;
     private RectTransform lifeBarRect;
-    public Text LifePoints;
 
     public RectTransform cubeSpawner;
 
-    public bool isDamaging = false;
     public GameObject cubePrefab;
     private float energyImageWidth;
     private float timer;
     public Text timeText;
-
-    public GameObject selectedButton;
 
     void Start()
     {
@@ -40,13 +36,21 @@ public class MenuControl : MonoBehaviour
             transform.Find("PauseMenu").transform.GetChild(0).GetComponent<Button>().Select();
             Time.timeScale = 0;
         }
+
+        LifeBar.fillAmount = PlayerController.TotalEnergy / 100;
+
     }
 
-	public IEnumerator CubeSpawn()
+    public void BellaFantasia(Coroutine co)
+    {
+        StopCoroutine(co);
+        co = null;
+    }
+
+    public IEnumerator CubeSpawn()
     {
         while (true)
         {
-			LifeBar.fillAmount = PlayerController.TotalEnergy / 100;
             GameObject go = Instantiate(cubePrefab);
             go.transform.SetParent(cubeSpawner);
             RectTransform rt = go.GetComponent<RectTransform>();
