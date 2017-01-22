@@ -52,7 +52,7 @@ public class CommandoInput : MonoBehaviour
 
         if (canUsePower)
         {
-            if ((Input.GetButton("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("Fire1Player") && SwitchLogic.isPlayer1Commander))
+            if ((Input.GetButtonDown("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
                 
                 commandoCamera.cullingMask |= (1 << LayerMask.NameToLayer("CommanderOnly"));
@@ -61,6 +61,8 @@ public class CommandoInput : MonoBehaviour
             {
                 commandoCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CommanderOnly"));
             }
+
+
         }
 
         if ((Input.GetButtonDown("Fire2Commando") && !isZooming && !SwitchLogic.isPlayer1Commander)|| (Input.GetButtonDown("Fire2Player") && !isZooming && SwitchLogic.isPlayer1Commander))

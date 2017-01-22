@@ -8,17 +8,13 @@ public class MenuControl : MonoBehaviour
 {
     public Image LifeBar;
     private RectTransform lifeBarRect;
-    public Text LifePoints;
 
     public RectTransform cubeSpawner;
 
-    public bool isDamaging = false;
     public GameObject cubePrefab;
     private float energyImageWidth;
     private float timer;
     public Text timeText;
-
-    public GameObject selectedButton;
 
     void Start()
     {

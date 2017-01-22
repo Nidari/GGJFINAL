@@ -9,11 +9,14 @@ public class PlayerController : MonoBehaviour
     
 	private Coroutine sonicDamEff, sonicDistEff, magneticDamEff, magneticDirEff, repulsiveDamEff, repulsiveDirEff, lifeBarEffect;
 
+    public static Coroutine TakingAbilityDamage;
+
 	public static bool IsDisturbed, IsInfluencedByForce;
 	public static Vector3 influInpu = Vector3.zero;
 	public static Quaternion distInput = Quaternion.identity;
 	public GameObject menu;
 	public static float TotalEnergy = 100;
+    public float abilityDamage;
 
     private void Update()
     {
@@ -29,7 +32,7 @@ public class PlayerController : MonoBehaviour
 				Debug.Log("Sonic Wave Triggered");
 				sonicDamEff = StartCoroutine (ConstantDot (wave.GetComponentInParent<SonicWave> ().DamagePerSecond));
 				sonicDistEff = StartCoroutine (DisturbingEffect (wave.GetComponentInParent <SonicWave> ().DisturbingPower));
-				// lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
+				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
 			    
 			    break;
 			case "MagneticWave":
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
 				MagneticWave mwTempLink = wave.GetComponentInParent<MagneticWave> ();
 				magneticDamEff = StartCoroutine (VariableProgressiveDot (mwTempLink.MinDamPerSecond, mwTempLink.gameObject.transform));
 				magneticDirEff = StartCoroutine (MagneticDirEffect (mwTempLink.MagneticPower, this.gameObject.transform, mwTempLink.gameObject.transform));
-				//lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
+				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
 				break;
 			case "ShockWave":
 				Debug.Log("Repulsive Wave Triggered");
@@ -62,8 +65,7 @@ public class PlayerController : MonoBehaviour
 				IsDisturbed = false;
                 GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 distInput = Quaternion.identity;
-                
-				///StopCoroutine (lifeBarEffect);
+				StopCoroutine (lifeBarEffect);
 				break;
 			case "MagneticWave":
 				Debug.Log("Magnetic Wave Triggered Out");
