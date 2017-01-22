@@ -82,13 +82,27 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
             // Comandi per far vedere i particellari
-            if ((Input.GetButton("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("TriggerLP2") && SwitchLogic.isPlayer1Commander))
+            if ((Input.GetButtonDown("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonDown("TriggerLP2") && SwitchLogic.isPlayer1Commander))
             {
+                PlayerController pc = GetComponent<PlayerController>();
                 m_Camera.cullingMask |= (1 << LayerMask.NameToLayer("PlayerOnly"));
+                if (pc.currentTakeDamage == 0)
+                {
+                    pc.costantAbilityDotReff = StartCoroutine(pc.AbilityConstantDot());
+                }
+                pc.currentTakeDamage += pc.damageCoefficient;
             }
             else
             {
                 m_Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("PlayerOnly"));
+                PlayerController pc = GetComponent<PlayerController>();
+
+                pc.currentTakeDamage -= pc.damageCoefficient;
+                if (pc.currentTakeDamage == 0)
+                {
+                    StopCoroutine(pc.costantAbilityDotReff);
+                    StopCoroutine(pc.lifeBarEffect);
+                }
             }
             
 

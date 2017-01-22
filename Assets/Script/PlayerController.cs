@@ -7,21 +7,18 @@ using XInputDotNetPure;
 public class PlayerController : MonoBehaviour
 {
     
-	private Coroutine sonicDamEff, sonicDistEff, magneticDamEff, magneticDirEff, repulsiveDamEff, repulsiveDirEff, lifeBarEffect;
+	private Coroutine sonicDamEff, sonicDistEff, magneticDamEff, magneticDirEff, repulsiveDamEff, repulsiveDirEff;
 
-    public static Coroutine TakingAbilityDamage;
+    public float currentTakeDamage;
+    public float damageCoefficient;
+    public Coroutine costantAbilityDotReff;
+    public Coroutine lifeBarEffect;
 
-	public static bool IsDisturbed, IsInfluencedByForce;
+    public static bool IsDisturbed, IsInfluencedByForce;
 	public static Vector3 influInpu = Vector3.zero;
 	public static Quaternion distInput = Quaternion.identity;
 	public GameObject menu;
 	public static float TotalEnergy = 100;
-    public float abilityDamage;
-
-    private void Update()
-    {
-      
-    }
 
     
 	private void OnTriggerEnter(Collider wave)
@@ -29,25 +26,30 @@ public class PlayerController : MonoBehaviour
 		switch (wave.gameObject.transform.parent.tag){
 
 			case "SonicWave":
-				Debug.Log("Sonic Wave Triggered");
 				sonicDamEff = StartCoroutine (ConstantDot (wave.GetComponentInParent<SonicWave> ().DamagePerSecond));
 				sonicDistEff = StartCoroutine (DisturbingEffect (wave.GetComponentInParent <SonicWave> ().DisturbingPower));
-				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
-			    
-			    break;
+                if (lifeBarEffect == null)
+                {
+                    lifeBarEffect = StartCoroutine(menu.GetComponent<MenuControl>().CubeSpawn());
+                }
+                break;
 			case "MagneticWave":
-				Debug.Log("Magnetic Wave Triggered");
 				MagneticWave mwTempLink = wave.GetComponentInParent<MagneticWave> ();
 				magneticDamEff = StartCoroutine (VariableProgressiveDot (mwTempLink.MinDamPerSecond, mwTempLink.gameObject.transform));
 				magneticDirEff = StartCoroutine (MagneticDirEffect (mwTempLink.MagneticPower, this.gameObject.transform, mwTempLink.gameObject.transform));
-				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
-				break;
+                if (lifeBarEffect == null)
+                {
+                    lifeBarEffect = StartCoroutine(menu.GetComponent<MenuControl>().CubeSpawn());
+                }
+                break;
 			case "ShockWave":
-				Debug.Log("Repulsive Wave Triggered");
 				ShockWave shwTempLink = wave.GetComponentInParent<ShockWave> ();
 				repulsiveDamEff = StartCoroutine (VariableProgressiveDot (shwTempLink.MinDamPerSecond, shwTempLink.gameObject.transform));
 				repulsiveDirEff = StartCoroutine (RepulsiveDirEffect (shwTempLink.RepulsivePower, this.gameObject.transform, shwTempLink.gameObject.GetComponentInChildren<Collider>().transform));
-				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
+                if (lifeBarEffect == null)
+                {
+                    lifeBarEffect = StartCoroutine(menu.GetComponent<MenuControl>().CubeSpawn());
+                }
 				break;
 		}
         
@@ -56,10 +58,9 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerExit(Collider wave)
     {
       
-		switch (wave.gameObject.transform.parent.tag){
-
+		switch (wave.gameObject.transform.parent.tag)
+        {
 			case "SonicWave":
-				Debug.Log("Sonic Wave Triggered Out");
 				StopCoroutine (sonicDamEff);
 				StopCoroutine (sonicDistEff);
 				IsDisturbed = false;
@@ -68,7 +69,6 @@ public class PlayerController : MonoBehaviour
 				StopCoroutine (lifeBarEffect);
 				break;
 			case "MagneticWave":
-				Debug.Log("Magnetic Wave Triggered Out");
 				StopCoroutine (magneticDamEff);
 				StopCoroutine (magneticDirEff);
 				IsInfluencedByForce = false;
@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
 				StopCoroutine (lifeBarEffect);
 				break;
 			case "ShockWave":
-				Debug.Log("Repulsive Wave Triggered Out");
 				StopCoroutine (repulsiveDamEff);
 				StopCoroutine (repulsiveDirEff);
 				IsInfluencedByForce = false;
@@ -89,7 +88,24 @@ public class PlayerController : MonoBehaviour
         
     }
 
-	private IEnumerator ConstantDot(float dot)
+    public IEnumerator AbilityConstantDot()
+    {
+        if (lifeBarEffect == null)
+        {
+            lifeBarEffect = StartCoroutine(menu.GetComponent<MenuControl>().CubeSpawn());
+        }
+
+        while (true)
+        {
+            TotalEnergy -= Time.deltaTime * currentTakeDamage;
+
+            if(currentTakeDamage > 0)
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator ConstantDot(float dot)
 	{
 
 		while(true)
