@@ -27,7 +27,7 @@ public class SwitchLogic : MonoBehaviour
         CheckGameStatus();
     }
 
-    public static float pulseFrequency=0;
+    public static float pulseFrequency=1;
 
     public void CheckGameStatus()
     {
