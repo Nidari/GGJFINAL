@@ -52,15 +52,37 @@ public class CommandoInput : MonoBehaviour
 
         if (canUsePower)
         {
-            if ((Input.GetButton("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("Fire1Player") && SwitchLogic.isPlayer1Commander))
+            if ((Input.GetButtonDown("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonDown("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
-                Debug.Log("cazzo");
                 commandoCamera.cullingMask |= (1 << LayerMask.NameToLayer("CommanderOnly"));
+                PlayerController pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+                if (pc.currentTakeDamage == 0)
+                {
+                    pc.costantAbilityDotReff = StartCoroutine(pc.AbilityConstantDot());
+                }
+                pc.currentTakeDamage += pc.damageCoefficient;
             }
-            else
+            else if ((Input.GetButtonUp("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonUp("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
                 commandoCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CommanderOnly"));
+                PlayerController pc = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+                pc.currentTakeDamage -= pc.damageCoefficient;
+                if (pc.currentTakeDamage == 0)
+                {
+                    if (pc.costantAbilityDotReff != null)
+                    {
+                        pc.costantAbilityDotReff = pc.Fantasia(pc.costantAbilityDotReff);
+                    }
+                    if (pc.lifeBarEffect != null)
+                    {
+                        pc.lifeBarEffect = pc.Fantasia(pc.lifeBarEffect);
+                    }
+                }
             }
+
+
         }
 
         if ((Input.GetButtonDown("Fire2Commando") && !isZooming && !SwitchLogic.isPlayer1Commander)|| (Input.GetButtonDown("Fire2Player") && !isZooming && SwitchLogic.isPlayer1Commander))

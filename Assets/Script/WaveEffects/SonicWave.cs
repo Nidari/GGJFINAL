@@ -8,7 +8,7 @@ public class SonicWave : MonoBehaviour {
 	public float DisturbingPower;
 
 	public GameObject[] particleObjects;
-
+    /*
 	private void OnValidate(){
 
 		float x = this.gameObject.transform.localScale.x;
@@ -49,4 +49,5 @@ public class SonicWave : MonoBehaviour {
 		if (!this.gameObject.CompareTag ("SonicWave"))
 			this.gameObject.tag = "SonicWave";
 	}
+    */
 }
