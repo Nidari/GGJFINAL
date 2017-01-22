@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 				Debug.Log("Repulsive Wave Triggered");
 				ShockWave shwTempLink = wave.GetComponentInParent<ShockWave> ();
 				repulsiveDamEff = StartCoroutine (VariableProgressiveDot (shwTempLink.MinDamPerSecond, shwTempLink.gameObject.transform));
-				repulsiveDirEff = StartCoroutine (RepulsiveDirEffect (shwTempLink.RepulsivePower, this.gameObject.transform, shwTempLink.gameObject.transform));
+				repulsiveDirEff = StartCoroutine (RepulsiveDirEffect (shwTempLink.RepulsivePower, this.gameObject.transform, shwTempLink.gameObject.GetComponentInChildren<Collider>().transform));
 				lifeBarEffect = StartCoroutine (menu.GetComponent<MenuControl> ().CubeSpawn ());
 				break;
 		}
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
 		while(true)
 		{
             GamePad.SetVibration(PlayerIndex.One, 1, 1);
-            influInpu  = Vector3.ProjectOnPlane(((emissionSource.position - player.position).normalized * pushPower), Vector3.up);
+            influInpu  = Vector3.ProjectOnPlane(((player.position - emissionSource.position).normalized * pushPower), Vector3.up);
             yield return null;
         }
 	}

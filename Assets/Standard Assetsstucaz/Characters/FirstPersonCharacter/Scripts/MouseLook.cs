@@ -59,7 +59,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                Debug.LogError("asd");
+               
                 character.localRotation = m_CharacterTargetRot;
                 
                 if (PlayerController.IsDisturbed && PlayerController.distInput != Quaternion.identity) {}
