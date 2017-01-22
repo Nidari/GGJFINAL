@@ -38,7 +38,7 @@ public class SwitchLogic : MonoBehaviour
 
     public void CheckGameStatus()
     {
-        pulseFrequency = 1-(PlayerController.TotalEnergy % 20 / 20);
+        pulseFrequency = (PlayerController.TotalEnergy % 20 / 20);
 
 
         if (PlayerController.TotalEnergy >= 60 && PlayerController.TotalEnergy < 80)
