@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
 	public static Vector3 influInpu = Vector3.zero;
 	public static Quaternion distInput = Quaternion.identity;
 	public GameObject menu;
-	public static float TotalEnergy;
+	public static float TotalEnergy = 100;
 
-    void Update()
+    private void Update()
     {
-        Debug.Log(TotalEnergy);
+      
     }
+
+    
 	private void OnTriggerEnter(Collider wave)
     {
 		switch (wave.gameObject.transform.parent.tag){
