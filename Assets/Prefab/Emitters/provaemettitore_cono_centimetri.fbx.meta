@@ -1,23 +1,25 @@
 fileFormatVersion: 2
-guid: 5883734ccfcabcb4d9a49f7c4387f542
-timeCreated: 1485067830
+guid: 94fffe568e891314aab79904ef374743
+timeCreated: 1485079812
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
+    100000: cono2
     100002: orecchiette1_orecchietta3
     100004: orecchiette2_orecchietta3
-    100006: sfera
-    400000: //RootNode
+    100006: //RootNode
+    100008: sfera
+    400000: cono2
     400002: orecchiette1_orecchietta3
     400004: orecchiette2_orecchietta3
-    400006: sfera
-    2300000: //RootNode
+    400006: //RootNode
+    400008: sfera
+    2300000: cono2
     2300002: orecchiette1_orecchietta3
     2300004: orecchiette2_orecchietta3
     2300006: sfera
-    3300000: //RootNode
+    3300000: cono2
     3300002: orecchiette1_orecchietta3
     3300004: orecchiette2_orecchietta3
     3300006: sfera
@@ -47,47 +49,11 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 60
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: orecchiette1_orecchietta3
-        weight: 1
-      - path: orecchiette2_orecchietta3
-        weight: 1
-      - path: sfera
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
