@@ -55,13 +55,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     smoothTime * Time.deltaTime);
                 camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
                     smoothTime * Time.deltaTime);
-				if (PlayerController.IsDisturbed && PlayerController.distInput != Quaternion.identity)
-					camera.localRotation *= PlayerController.distInput;
+				
             }
             else
             {
+                Debug.LogError("asd");
                 character.localRotation = m_CharacterTargetRot;
-                camera.localRotation = m_CameraTargetRot;
+                
+                if (PlayerController.IsDisturbed && PlayerController.distInput != Quaternion.identity) {}
+                    //camera.localRotation *= PlayerController.distInput;
+                else
+                {
+                    camera.localRotation = m_CameraTargetRot;
+                }
             }
 
             UpdateCursorLock();
