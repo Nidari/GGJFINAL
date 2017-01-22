@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class CommandoInput : MonoBehaviour
 {
@@ -10,63 +11,94 @@ public class CommandoInput : MonoBehaviour
     public float countdown = 2;
     private Coroutine cooldownCoroutine;
     public GameObject zoomCameraPosition;
+    public GameObject deZoomCamPosGO;
     Vector3 positionCommandoCam;
     Vector3 positionTempPlayer;
-    bool isZoomed = false;
-    bool isZooming = false;
-    bool lockedFinished = false;
-    bool isMoving = false;
+    Vector3 dezoomCamPosition;
+    public bool isZoomed = false;
+    public bool isZooming = false;
+    public bool lockedFinished = true;
+    public bool isMoving = false;
     public bool lockCamera = false;
     public float phase = 2;
+    public Transform playerTr;
 
     // Use this for initialization
     void Start()
     {
+        playerTr = FindObjectOfType<FirstPersonController>().transform;
         positionCommandoCam = commandoCamera.transform.position;
     }
 
-    // Update is called once per frame
+    public bool commandoMovingCam;
+
     void Update()
     {
-        if (Input.GetButton("Fire1Commando") && canUsePower)
+        float horizontalCam, verticalCam;
+        if (!SwitchLogic.isPlayer1Commander)
         {
-            commandoCamera.cullingMask |= (1 << LayerMask.NameToLayer("CommanderOnly"));
+            horizontalCam = Input.GetAxis("HorizontalP2");
+            verticalCam = Input.GetAxis("VerticalP2");
         }
         else
         {
-            commandoCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CommanderOnly"));
+            horizontalCam = Input.GetAxis("Horizontal");
+            verticalCam = Input.GetAxis("Vertical");
         }
-        if (Input.GetButtonUp("Fire1Commando"))
+
+        //commandoCamera.transform.LookAt(playerTr);
+        commandoCamera.transform.position += new Vector3(horizontalCam, 0, verticalCam) * 5 * Time.deltaTime; 
+        
+
+        if (canUsePower)
         {
-            //cooldownCoroutine = StartCoroutine(CooldownPowerCommanderCO());
-            //canUsePower = false;
-        }
-        if (Input.GetButtonDown("Fire2") && !isZooming)
-        {
-            if (!isZoomed)
+            if ((Input.GetButton("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
-                StartCoroutine(ZoomCameraCO(positionCommandoCam));                
+                Debug.Log("cazzo");
+                commandoCamera.cullingMask |= (1 << LayerMask.NameToLayer("CommanderOnly"));
             }
             else
             {
-                StartCoroutine(DeZoomCameraCO(positionCommandoCam));
+                commandoCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CommanderOnly"));
             }
-            
         }
-        if (Input.GetButtonDown("Fire3") )
-        {
-            lockCamera = !lockCamera;
 
-            if (isZoomed && !isZooming && lockCamera)
+        if ((Input.GetButtonDown("Fire2Commando") && !isZooming && !SwitchLogic.isPlayer1Commander)|| (Input.GetButtonDown("Fire2Player") && !isZooming && SwitchLogic.isPlayer1Commander))
+        {
+            if (!isMoving)
+            { 
+                if (!isZoomed)
+                {
+                    dezoomCamPosition = commandoCamera.transform.position;
+                    StartCoroutine(ZoomCameraCO(commandoCamera.transform.position));
+                }
+                else
+                {
+                    StartCoroutine(DeZoomCameraCO(dezoomCamPosition));
+                }
+            }
+        }
+        if ((Input.GetButtonDown("Fire3Commando") && !SwitchLogic.isPlayer1Commander)|| (Input.GetButtonDown("Fire3Player") && SwitchLogic.isPlayer1Commander))
+        {
+
+            lockCamera = !lockCamera;
+            if (!isZooming && lockCamera)
             {
+
                 StartCoroutine(LockCameraCO());
             }
         }
-        if (lockCamera && lockedFinished && !isMoving )
+        if (lockCamera && lockedFinished && !isMoving)
         {
             if (isZoomed && !isZooming)
             {
                 commandoCamera.transform.position = zoomCameraPosition.transform.position;
+                positionTempPlayer = commandoCamera.transform.position;
+            }
+            if (!isZoomed && !isZooming)
+            {
+                commandoCamera.transform.position = deZoomCamPosGO.transform.position;
+                positionTempPlayer = commandoCamera.transform.position;
             }
         }
     }
@@ -89,7 +121,7 @@ public class CommandoInput : MonoBehaviour
         isZooming = true;
         while (timer < phase)
         {
-            commandoCamera.transform.position = Vector3.Lerp(tempPosition, zoomCameraPosition.transform.position, timer/phase);
+            commandoCamera.transform.position = Vector3.Lerp(tempPosition, zoomCameraPosition.transform.position, timer / phase);
             timer += Time.deltaTime;
             yield return null;
         }
@@ -100,11 +132,18 @@ public class CommandoInput : MonoBehaviour
     IEnumerator DeZoomCameraCO(Vector3 tempPosition)
     {
         float timer = 0;
-        
+        Vector3 camActualPosition = commandoCamera.transform.position;
         isZooming = true;
         while (timer < phase)
         {
-            commandoCamera.transform.position = Vector3.Lerp(positionTempPlayer, tempPosition, timer / phase);
+            if (lockCamera)
+            {
+                commandoCamera.transform.position = Vector3.Lerp(camActualPosition, deZoomCamPosGO.transform.position, timer / phase);
+            }
+            else
+            {
+                commandoCamera.transform.position = Vector3.Lerp(camActualPosition, tempPosition, timer / phase);
+            }
             timer += Time.deltaTime;
             yield return null;
         }
@@ -122,8 +161,18 @@ public class CommandoInput : MonoBehaviour
         isMoving = true;
         while (timer < seconds)
         {
+            float startingDistance = Vector3.Distance(actualCameraPosition, zoomCameraPosition.transform.position);
+            if (isZoomed)
+            {
+                commandoCamera.transform.position = Vector3.Lerp(actualCameraPosition, zoomCameraPosition.transform.position, timer);
+                
+            }
+            else
+            {
+                commandoCamera.transform.position = Vector3.Lerp(actualCameraPosition, deZoomCamPosGO.transform.position, timer);
+                
+            }
 
-            commandoCamera.transform.position = Vector3.Lerp(actualCameraPosition, zoomCameraPosition.transform.position, timer / phase);
             timer += Time.deltaTime;
             yield return null;
         }
