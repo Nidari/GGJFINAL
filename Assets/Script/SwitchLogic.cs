@@ -31,9 +31,9 @@ public class SwitchLogic : MonoBehaviour
     }
     public void Update()
     {
-<<<<<<< HEAD
+
         if (Input.GetKeyDown(KeyCode.S))
-=======
+
         CheckGameStatus();
     }
 
@@ -87,7 +87,6 @@ public class SwitchLogic : MonoBehaviour
             }
         }
         else if (PlayerController.TotalEnergy < 0)
->>>>>>> 3e49ba0dc8fd098afb44e45382efa527b98ac93b
         {
             //GameOver();
             Debug.Log("GameOver da Implementare");

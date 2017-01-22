@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
 
 
 public class PlayerController : MonoBehaviour
@@ -64,7 +63,6 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(sonicDamEff);
                 StopCoroutine(sonicDistEff);
                 IsDisturbed = false;
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 distInput = Quaternion.identity;
                 waveLifeEffect = Fantasia(waveLifeEffect);
                 break;
@@ -72,7 +70,6 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(magneticDamEff);
                 StopCoroutine(magneticDirEff);
                 IsInfluencedByForce = false;
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 influInpu = Vector3.zero;
                 waveLifeEffect = Fantasia(waveLifeEffect);
                 break;
@@ -80,7 +77,6 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(repulsiveDamEff);
                 StopCoroutine(repulsiveDirEff);
                 IsInfluencedByForce = false;
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 influInpu = Vector3.zero;
                 waveLifeEffect = Fantasia(waveLifeEffect);
                 break;
@@ -130,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         while (true)
         {
-            GamePad.SetVibration(PlayerIndex.One, 1, 1);
 
             var rotationAmount = Random.insideUnitSphere * distPower;
             rotationAmount.z = 0;
@@ -159,7 +154,6 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
 
-            GamePad.SetVibration(PlayerIndex.One, 1, 1);
             influInpu = Vector3.ProjectOnPlane(((emissionSource.position - player.position).normalized * pushPower), Vector3.up);
 
             yield return null;
@@ -172,7 +166,6 @@ public class PlayerController : MonoBehaviour
 
         while (true)
         {
-            GamePad.SetVibration(PlayerIndex.One, 1, 1);
             influInpu = Vector3.ProjectOnPlane(((player.position - emissionSource.position).normalized * pushPower), Vector3.up);
             yield return null;
         }

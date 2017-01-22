@@ -90,14 +90,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     pc.costantAbilityDotReff = StartCoroutine(pc.AbilityConstantDot());
                 }
-                pc.currentTakeDamage += pc.damageCoefficient;
+               // pc.currentTakeDamage += pc.damageCoefficient;
             }
             else if ((Input.GetButtonUp("TriggerL") && !SwitchLogic.isPlayer1Commander) || (Input.GetButtonUp("TriggerLP2") && SwitchLogic.isPlayer1Commander))
             {
                 m_Camera.cullingMask &= ~(1 << LayerMask.NameToLayer("PlayerOnly"));
                 PlayerController pc = this.gameObject.GetComponent<PlayerController>();
 
-                pc.currentTakeDamage -= pc.damageCoefficient;
+              //  pc.currentTakeDamage -= pc.damageCoefficient;
                 if (pc.currentTakeDamage == 0)
                 {
                     if (pc.costantAbilityDotReff != null)
