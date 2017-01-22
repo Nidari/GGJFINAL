@@ -1,28 +1,26 @@
 fileFormatVersion: 2
-guid: 963b0f224a1828c4ea7cda478ea6ae49
-timeCreated: 1485062340
+guid: f2c3459f7eea67946b6753b40ed1d320
+timeCreated: 1485042926
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: orb1
-    100004: pCube2
-    100006: polySurface1
-    100008: polySurface3
-    100010: polySurface5
-    100012: polySurface6
-    100014: polySurface7
-    100016: polySurface8
+    100002: pCube2
+    100004: polySurface1
+    100006: polySurface3
+    100008: polySurface5
+    100010: polySurface6
+    100012: polySurface7
+    100014: polySurface8
     400000: //RootNode
-    400002: orb1
-    400004: pCube2
-    400006: polySurface1
-    400008: polySurface3
-    400010: polySurface5
-    400012: polySurface6
-    400014: polySurface7
-    400016: polySurface8
+    400002: pCube2
+    400004: polySurface1
+    400006: polySurface3
+    400008: polySurface5
+    400010: polySurface6
+    400012: polySurface7
+    400014: polySurface8
     2300000: pCube2
     2300002: polySurface1
     2300004: polySurface3
@@ -66,57 +64,11 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 100
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: orb1
-        weight: 1
-      - path: orb1/pCube2
-        weight: 1
-      - path: orb1/polySurface1
-        weight: 1
-      - path: orb1/polySurface3
-        weight: 1
-      - path: orb1/polySurface5
-        weight: 1
-      - path: orb1/polySurface6
-        weight: 1
-      - path: orb1/polySurface7
-        weight: 1
-      - path: orb1/polySurface8
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 350
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
