@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 56c4254adf27c7c4aa40b2a00d8c1b77
-timeCreated: 1485061529
+guid: d671bd623d57b9a4c8900b41fb3b7af8
+timeCreated: 1485067170
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -98,77 +98,11 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 100
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: main
-        weight: 1
-      - path: main/nurbsCircle1
-        weight: 1
-      - path: main/nurbsCircle2
-        weight: 1
-      - path: orb2
-        weight: 1
-      - path: orb2/group2
-        weight: 1
-      - path: orb2/group2/cono1
-        weight: 1
-      - path: orb2/group2/cono2
-        weight: 1
-      - path: orb2/group2/orecchiette1
-        weight: 1
-      - path: orb2/group2/orecchiette1/orecchietta1
-        weight: 1
-      - path: orb2/group2/orecchiette1/orecchietta2
-        weight: 1
-      - path: orb2/group2/orecchiette1/orecchietta3
-        weight: 1
-      - path: orb2/group2/orecchiette1/orecchietta4
-        weight: 1
-      - path: orb2/group2/orecchiette2
-        weight: 1
-      - path: orb2/group2/orecchiette2/orecchietta1 1
-        weight: 1
-      - path: orb2/group2/orecchiette2/orecchietta2 1
-        weight: 1
-      - path: orb2/group2/orecchiette2/orecchietta3 1
-        weight: 1
-      - path: orb2/group2/orecchiette2/orecchietta4 1
-        weight: 1
-      - path: orb2/group2/sfera
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 200
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

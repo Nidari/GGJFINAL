@@ -54,7 +54,7 @@ public class CommandoInput : MonoBehaviour
         {
             if ((Input.GetButton("Fire1Commando") && !SwitchLogic.isPlayer1Commander) || (Input.GetButton("Fire1Player") && SwitchLogic.isPlayer1Commander))
             {
-                Debug.Log("cazzo");
+                
                 commandoCamera.cullingMask |= (1 << LayerMask.NameToLayer("CommanderOnly"));
             }
             else
