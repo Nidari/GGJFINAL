@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerController : MonoBehaviour
@@ -19,10 +20,42 @@ public class PlayerController : MonoBehaviour
     public GameObject menu;
     public static float TotalEnergy = 100;
 
+    public GameObject gameOverPanel;
+    public GameObject gameOverPanel1;
+
+    private bool dyingFlag = false;
+
+    private bool damageCd;
+
     public Coroutine Fantasia(Coroutine co)
     {
         StopCoroutine(co);
         return null;
+    }
+
+    private void Update()
+    {
+        if (TotalEnergy <= 0 && !dyingFlag)
+        {
+            dyingFlag = true;
+            StartCoroutine(dying());
+        }
+    }
+
+    private IEnumerator dying()
+    {
+        var timer = 0.0f;
+
+        gameOverPanel.SetActive(true);
+        gameOverPanel1.SetActive(true);
+
+        while (timer < 5)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        TotalEnergy = 100;
+        SceneManager.LoadScene(0);
     }
 
     private void OnTriggerEnter(Collider wave)
@@ -31,6 +64,7 @@ public class PlayerController : MonoBehaviour
         {
 
             case "SonicWave":
+                
                 sonicDamEff = StartCoroutine(ConstantDot(wave.GetComponentInParent<SonicWave>().DamagePerSecond));
                 sonicDistEff = StartCoroutine(DisturbingEffect(wave.GetComponentInParent<SonicWave>().DisturbingPower));
                 waveLifeEffect = StartCoroutine(menu.GetComponent<MenuControl>().CubeSpawn());
@@ -82,6 +116,21 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+    }
+
+    private IEnumerator DamageCooldown()
+    {
+        damageCd = true;
+        var timer = 0.0f;
+
+
+        while(timer < 2)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        damageCd = false;
     }
 
     public IEnumerator AbilityConstantDot()

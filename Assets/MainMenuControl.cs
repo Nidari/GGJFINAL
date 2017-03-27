@@ -12,16 +12,22 @@ public class MainMenuControl : MonoBehaviour
 
 	void Start ()
     {
-        StartCoroutine(PlayAnim());	
+        StartCoroutine(PlayAnim());
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
 	}
 	
     IEnumerator PlayAnim()
     {
-        Image image = GetComponent<Image>();
 
+
+        Image image = GetComponent<Image>();
         for (int i = 0; i < spriteFrames.Length; i++)
         {
             image.sprite = spriteFrames[i];
+            Debug.Log(spriteFrames);
+            Debug.Log(spriteFrames.Length);
             yield return new WaitForSeconds(animationSpeed);
         }
 
@@ -35,13 +41,15 @@ public class MainMenuControl : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("MainGame");
+        Image image = GetComponent<Image>();
+        image.sprite = spriteFrames[0];
+        SceneManager.LoadScene("TestMove");
     }
 
-    public void Credit()
-    {
-        SceneManager.LoadScene("Credit");
-    }
+    //public void Credit()
+    //{
+    //    SceneManager.LoadScene("Credit");
+    //}
 
     public void Exit()
     {

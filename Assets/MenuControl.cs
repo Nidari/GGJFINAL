@@ -15,8 +15,6 @@ public class MenuControl : MonoBehaviour
     public bool isDamaging = false;
     public GameObject cubePrefab;
     private float energyImageWidth;
-    private float timer;
-    public Text timeText;
 
     public GameObject selectedButton;
 
@@ -29,10 +27,6 @@ public class MenuControl : MonoBehaviour
     {
         energyImageWidth = lifeBarRect.rect.width * LifeBar.fillAmount ;
         cubeSpawner.anchoredPosition = new Vector3(energyImageWidth, 0,0);
-        timer += Time.deltaTime;
-        string minutes = Mathf.Floor(timer / 60).ToString("00");
-        string seconds = Mathf.Floor(timer % 60).ToString("00");
-        timeText.text = minutes + ":" + seconds;
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
